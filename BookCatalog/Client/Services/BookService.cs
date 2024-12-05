@@ -14,6 +14,7 @@ namespace BookCatalog.Client.Services
     {
         private readonly HttpClient _httpClient;
         private readonly string baseUrl = "http://localhost:7138/api";
+        
         public BookService(HttpClient httpClient)
         {
             _httpClient = httpClient;
@@ -46,6 +47,7 @@ namespace BookCatalog.Client.Services
         {
             await _httpClient.DeleteAsync($"{baseUrl}/books/{id}");
         }
+        
         public async Task<bool> HandleFileUpload(InputFileChangeEventArgs e)
         {
             var file = e.File;
@@ -66,6 +68,5 @@ namespace BookCatalog.Client.Services
             }
             return false;
         }
-
     }
 }
