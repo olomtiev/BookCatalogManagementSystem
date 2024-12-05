@@ -54,7 +54,7 @@ Before starting with the project, make sure you have the following tools install
 
 To build and run the application using Docker Compose, execute the following command:
 
-    ```bash 
+    ```bash
     docker-compose up --build
     ```
 
