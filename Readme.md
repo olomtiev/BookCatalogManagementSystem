@@ -50,22 +50,12 @@ Before starting with the project, make sure you have the following tools install
     dotnet run --project BookCatalog.Client
     ```
 
-### Running with Docker
+### Build and Run with Docker Compose
 
-1. Build the Docker image:
+To build and run the application using Docker Compose, execute the following command:
 
-    Navigate to the root folder of the project and run the following command to build the Docker image:
-
-    ```bash
-    docker build -t book-catalog-management-system .
-    ```
-
-2. Run the container:
-
-    After building the image, run the container using this command:
-
-    ```bash
-    docker run -d -p 80:80 book-catalog-management-system
+    ```bash 
+    docker-compose up --build
     ```
 
 ## Deployment
