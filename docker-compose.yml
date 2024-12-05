@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: BookCatalog/Server/Dockerfile
+    ports:
+      - "7138:80"
+    networks:
+      - book-catalog-network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+
+  frontend:
+    build:
+      context: .
+      dockerfile: BookCatalog/Client/Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - book-catalog-network
+
+networks:
+  book-catalog-network:
+    driver: bridge

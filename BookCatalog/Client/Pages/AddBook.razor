@@ -1,0 +1,39 @@
+﻿@page "/add-book"
+@using BookCatalog.Client.Services;
+@using BookCatalog.Shared;
+@inject BookService BookService
+@inject NavigationManager NavigationManager
+
+<h3>Add New Book</h3>
+
+<EditForm Model="@book" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="title">Title</label>
+    <InputText id="title" @bind-Value="book.Title" />
+
+    <label for="author">Author</label>
+    <InputText id="author" @bind-Value="book.Author" />
+
+    <label for="genre">Genre</label>
+    <InputText id="genre" @bind-Value="book.Genre" />
+
+    <label for="publishedDate">Published Date</label>
+    <InputDate id="publishedDate" @bind-Value="book.PublishedDate" />
+
+    <button type="submit" disabled="@IsSubmitDisabled">Submit</button>
+</EditForm>
+
+@code {
+    private Book book = new Book();
+    private bool IsSubmitDisabled =>
+      string.IsNullOrWhiteSpace(book.Title) ||
+      string.IsNullOrWhiteSpace(book.Author) ||
+      string.IsNullOrWhiteSpace(book.Genre);
+    private async Task HandleValidSubmit()
+    {
+        await BookService.AddBookAsync(book);
+        NavigationManager.NavigateTo("/books");
+    }
+}

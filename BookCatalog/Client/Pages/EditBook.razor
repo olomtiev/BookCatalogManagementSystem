@@ -1,0 +1,44 @@
+﻿@page "/edit-book/{id:int}"
+@using BookCatalog.Client.Services;
+@using BookCatalog.Shared;
+@inject BookService BookService
+@inject NavigationManager NavigationManager
+
+<h3>Edit Book</h3>
+@if (book != null)
+{
+    <EditForm Model="@book" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="title">Title</label>
+    <InputText id="title" @bind-Value="book.Title" />
+
+    <label for="author">Author</label>
+    <InputText id="author" @bind-Value="book.Author" />
+
+    <label for="genre">Genre</label>
+    <InputText id="genre" @bind-Value="book.Genre" />
+
+    <label for="publishedDate">Published Date</label>
+    <InputDate id="publishedDate" @bind-Value="book.PublishedDate" />
+
+    <button type="submit">Save Changes</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private Book book;
+
+    protected override async Task OnInitializedAsync()
+    {
+        book = await BookService.GetBookAsync(Id);
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        await BookService.UpdateBookAsync(book);
+        NavigationManager.NavigateTo("/books");
+    }
+}
