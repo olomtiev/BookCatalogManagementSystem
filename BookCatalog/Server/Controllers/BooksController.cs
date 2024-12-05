@@ -57,7 +57,6 @@ namespace BookCatalog.Controllers
             {
                 return NotFound();
             }
-
             return Ok(book);
         }
 
@@ -68,7 +67,6 @@ namespace BookCatalog.Controllers
             {
                 return BadRequest();
             }
-
             await _bookRepository.AddBookAsync(book);
             return CreatedAtAction(nameof(GetBookById), new { id = book.Id }, book);
         }
@@ -80,13 +78,11 @@ namespace BookCatalog.Controllers
             {
                 return BadRequest();
             }
-
             var existingBook = await _bookRepository.GetBookByIdAsync(id);
             if (existingBook == null)
             {
                 return NotFound();
             }
-
             await _bookRepository.UpdateBookAsync(book);
             return NoContent();
         }
@@ -99,19 +95,17 @@ namespace BookCatalog.Controllers
             {
                 return NotFound();
             }
-
             await _bookRepository.DeleteBookAsync(id);
             return NoContent();
         }
-
         
-
         [HttpPost("import")]
         public async Task<IActionResult> ImportBooks(IFormFile file)
         {
             if (file == null || file.Length == 0)
+            {
                 return BadRequest("Invalid file.");
-
+            }
             using var reader = new StreamReader(file.OpenReadStream());
             var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
             var books = csvReader.GetRecords<Book>().ToList();
